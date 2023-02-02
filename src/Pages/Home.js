@@ -1,13 +1,10 @@
 import React from 'react';
 import {auth} from '../firebase';
-import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  let navigate = useNavigate();
   const logout = async() => {
     try {
       await auth.signOut();
-      navigate("/login");
 
     } catch (error) {
       console.log(error);
@@ -18,7 +15,7 @@ const Home = () => {
   return (
     <div>
       this is home page
-      {/* <h1>{`Current logged in user ${auth.currentUser.email}`}</h1> */}
+      <h1>{`Current logged in user ${auth.currentUser.email}`}</h1>
       <button onClick={logout}>Logout</button>
     </div>
   );
