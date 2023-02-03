@@ -4,8 +4,8 @@ import PrivateRoute from './Auth/PrivateRoutes';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
-import Main from './Pages/main';
 import Dashboard from './Pages/Dashboard';
+import AddStudent from './Pages/addStudent';
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ const App = () => {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="main" element={<Main />} />
+            <Route path="/add" element={<AddStudent />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </AuthProvider>

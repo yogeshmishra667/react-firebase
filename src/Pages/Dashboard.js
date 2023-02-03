@@ -8,6 +8,8 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { mainListItems } from './listItems';
+import AddStudent from './addStudent';
+import DataGrid from '../components/datagridItems';
 
 const drawerWidth = 240;
 
@@ -75,7 +77,8 @@ export default function ClippedDrawer() {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <Typography paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</Typography>
+        <Typography paragraph>Add Student</Typography>
+        <DataGrid />
       </main>
     </div>
   );
