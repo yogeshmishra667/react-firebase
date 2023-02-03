@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Main from './Pages/main';
+import Dashboard from './Pages/Dashboard';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="main" element={<Main />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </AuthProvider>
       </Router>
