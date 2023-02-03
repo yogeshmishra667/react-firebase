@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import { DB } from '../firebase';
@@ -40,8 +40,16 @@ const Home = () => {
     }
   };
 
-  const viewData = (id) => {
-    console.log(id);
+  const viewData = async (id) => {
+    const docRef = doc(DB, 'student', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log('Document data:', docSnap.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log('No such document!');
+    }
   };
 
   const editData = (id) => {
