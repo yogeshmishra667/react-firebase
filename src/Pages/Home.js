@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import { DB } from '../firebase';
 
@@ -13,7 +14,8 @@ const Home = () => {
       try {
         const querySnapshot = await getDocs(collection(DB, 'student'));
         querySnapshot.forEach((doc) => {
-          list.push(doc.data());
+          list.push({ id: doc.id, ...doc.data() }); // push data to list it will prevent from re-rendering data the page
+          // console.log(doc.id, ' => ', doc.data());
           setData(list);
         });
       } catch (error) {
@@ -30,6 +32,21 @@ const Home = () => {
       console.log(error);
     }
   };
+  const deleteData = async (id) => {
+    try {
+      await deleteDoc(doc(DB, 'student', id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const viewData = (id) => {
+    console.log(id);
+  };
+
+  const editData = (id) => {
+    console.log(id);
+  };
 
   return (
     <div>
@@ -37,7 +54,10 @@ const Home = () => {
       <ul>
         {data.map((item) => (
           <li key={item.id}>
-            {item.firstname} - {item.city} - {item.division}
+            {item.id} -{item.firstname}
+            <button onClick={() => viewData(item.id)}> view</button>
+            <button onClick={() => editData(item.id)}> update</button>
+            <button onClick={() => deleteData(item.id)}> Delete</button>
             <br />
           </li>
         ))}
