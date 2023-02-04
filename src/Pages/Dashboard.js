@@ -11,6 +11,7 @@ import { mainListItems } from '../components/listItems';
 import DataGrid from '../Pages/datagridItems';
 import { auth } from '../firebase';
 import Clock from '../components/Time';
+import { Outlet } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = ({ getStudentId }) => {
+const Dashboard = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -86,8 +87,7 @@ const Dashboard = ({ getStudentId }) => {
           <Typography paragraph>Manage Student</Typography>
           <Chip label={<Clock />} variant="outlined" color="secondary" style={{ borderRadius: '5px' }} />
         </div>
-
-        <DataGrid getStudentId={getStudentId} />
+        <Outlet />
       </main>
     </div>
   );

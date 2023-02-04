@@ -29,13 +29,15 @@ export const mainListItems = (
   <>
     <ToastContainer />
     <React.Fragment>
-      <ListItem button>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Manage Student" />
-      </ListItem>
-      <Link to="/add">
+      <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>
+        <ListItem button>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Manage Student" />
+        </ListItem>
+      </Link>
+      <Link to="/add" style={{ color: 'black', textDecoration: 'none' }}>
         <ListItem button>
           <ListItemIcon>
             <PeopleIcon />

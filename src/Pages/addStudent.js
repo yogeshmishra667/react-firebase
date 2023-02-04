@@ -119,19 +119,6 @@ const Addstudent = () => {
     <>
       <ToastContainer />
       <form className={classes.root} onSubmit={handleSubmit}>
-        <Button
-          variant="contained"
-          color="secondary"
-          style={{ marginLeft: '20px', marginTop: '20px' }}
-          onClick={() => navigate('/')}
-        >
-          back
-        </Button>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 40px 0px 40px ' }}>
-          <Typography paragraph>Manage Student</Typography>
-          <Chip label={<Clock />} variant="outlined" color="secondary" style={{ borderRadius: '5px' }} />
-        </div>
         <div>
           <TextField
             require
@@ -162,76 +149,78 @@ const Addstudent = () => {
           />
 
           {/* select dropdown */}
-          <div style={{ marginLeft: 40 }}>
-            <FormControl variant="filled" className={classes.formControl}>
-              <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
-                select class
-              </InputLabel>
-              <Select
-                style={{
-                  width: 400,
-                }}
-                onChange={(e) => setClasss(e.target.value)}
-                labelId="demo-simple-select-filled-label"
-                id="demo-simple-select-filled"
-                // value={age}
-                // onChange={handleChange}
-              >
-                <MenuItem value="">
-                  <em>select class</em>
-                </MenuItem>
-                {ClassData.map((cls) => (
-                  <MenuItem key={cls} value={cls}>
-                    {cls}
+          <div style={{ marginLeft: 40, display: 'flex' }}>
+            <div style={{ marginRight: '50px' }}>
+              <FormControl variant="filled" className={classes.formControl}>
+                <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+                  select class
+                </InputLabel>
+                <Select
+                  style={{
+                    width: 500,
+                  }}
+                  onChange={(e) => setClasss(e.target.value)}
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                >
+                  <MenuItem value="">
+                    <em>select class</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {ClassData.map((cls) => (
+                    <MenuItem key={cls} value={cls}>
+                      {cls}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
 
-            <FormControl variant="filled" className={classes.formControl}>
-              <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
-                select division
-              </InputLabel>
-              <Select
-                value={division}
-                onChange={(e) => setDivision(e.target.value)}
-                style={{
-                  width: 400,
-                }}
-                labelId="demo-simple-select-filled-label"
-                id="demo-simple-select-filled"
-              >
-                <MenuItem value="">
-                  <em>select class</em>
-                </MenuItem>
-                {divisionData.map((div) => (
-                  <MenuItem key={div} value={div}>
-                    {div}
+            <div style={{ marginLeft: '50px' }}>
+              <FormControl variant="filled" className={classes.formControl}>
+                <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+                  select division
+                </InputLabel>
+                <Select
+                  value={division}
+                  onChange={(e) => setDivision(e.target.value)}
+                  style={{
+                    width: 500,
+                  }}
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                >
+                  <MenuItem value="">
+                    <em>select class</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {divisionData.map((div) => (
+                    <MenuItem key={div} value={div}>
+                      {div}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
           </div>
-          <div className={classes.margin}>
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Address Line 1"
-              multiline
-              maxRows={4}
-              variant="outlined"
-              onChange={(e) => setAddress1(e.target.value)}
-            />
 
-            <TextField
-              required
-              id="outlined-multiline-flexible"
-              label="Address Line 2"
-              multiline
-              maxRows={4}
-              variant="outlined"
-              onChange={(e) => setAddress2(e.target.value)}
-            />
-          </div>
+          <TextField
+            id="outlined-multiline-flexible"
+            label="Address Line 1"
+            multiline
+            maxRows={4}
+            variant="outlined"
+            onChange={(e) => setAddress1(e.target.value)}
+          />
+
+          <TextField
+            required
+            id="outlined-multiline-flexible"
+            label="Address Line 2"
+            multiline
+            maxRows={4}
+            variant="outlined"
+            onChange={(e) => setAddress2(e.target.value)}
+          />
+
           <TextField
             required
             id="outlined-text-input"
