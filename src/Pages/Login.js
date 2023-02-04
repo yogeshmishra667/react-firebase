@@ -2,6 +2,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import img from './logo.png';
 
 //martial ui
@@ -26,15 +28,18 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      navigate('/');
-      console.log(user);
+      toast.success('Login Successful', user);
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 
   return (
     <Grid>
+      <ToastContainer />
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
           <Avatar style={avatarStyle}>

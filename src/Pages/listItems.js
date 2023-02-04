@@ -1,45 +1,54 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { auth } from '../firebase';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+//material ui imports
 import ListItem from '@material-ui/core/listItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import { Link } from 'react-router-dom';
-import { auth } from '../firebase';
-import { useNavigate } from 'react-router-dom';
 
 //for the Logout
 const logout = async () => {
   try {
     await auth.signOut();
-    return (window.location.href = '/login');
+    toast.success('Logout Successful');
+    setTimeout(() => {
+      window.location.href = '/login';
+    }, 3000);
   } catch (error) {
-    console.log(error);
+    toast.error(error.message);
   }
 };
 
 export const mainListItems = (
-  <React.Fragment>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Manage Student" />
-    </ListItem>
-    <Link to="/add">
+  <>
+    <ToastContainer />
+    <React.Fragment>
       <ListItem button>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Add Student" />
+        <ListItemText primary="Manage Student" />
       </ListItem>
-    </Link>
-    <ListItem button onClick={logout}>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Logout" />
-    </ListItem>
-  </React.Fragment>
+      <Link to="/add">
+        <ListItem button>
+          <ListItemIcon>
+            <ShoppingCartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Add Student" />
+        </ListItem>
+      </Link>
+      <ListItem button onClick={logout}>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Logout" />
+      </ListItem>
+    </React.Fragment>
+  </>
 );

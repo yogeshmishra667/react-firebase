@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import img from './logo.png';
 
 //martial ui
@@ -13,6 +16,7 @@ const Signup = () => {
   const avatarStyle = { width: '100px', height: '100px' };
   const btnstyle = { margin: '12px 0', backgroundColor: '#fa2609' };
 
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,20 +27,24 @@ const Signup = () => {
 
   const register = async () => {
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
+      toast.success('Registration Successful');
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 
   return (
     <Grid>
+      <ToastContainer />
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
           <Avatar style={avatarStyle}>

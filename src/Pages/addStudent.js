@@ -13,6 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import { Grid, Paper, Avatar, Typography, Toolbar, Chip } from '@material-ui/core';
+import Clock from './Time';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -97,6 +99,11 @@ const Addstudent = () => {
         >
           back
         </Button>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 40px 0px 40px ' }}>
+          <Typography paragraph>Manage Student</Typography>
+          <Chip label={<Clock />} variant="outlined" color="secondary" style={{ borderRadius: '5px' }} />
+        </div>
         <div>
           <TextField
             id="outlined-text-input"

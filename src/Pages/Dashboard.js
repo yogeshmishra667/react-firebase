@@ -10,6 +10,7 @@ import Chip from '@material-ui/core/Chip';
 import { mainListItems } from './listItems';
 import DataGrid from '../Pages/datagridItems';
 import { auth } from '../firebase';
+import Clock from './Time';
 
 const drawerWidth = 240;
 
@@ -76,7 +77,11 @@ const Dashboard = ({ getStudentId }) => {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <Typography paragraph>Manage Student</Typography>
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+          <Typography paragraph>Manage Student</Typography>
+          <Chip label={<Clock />} variant="outlined" color="secondary" style={{ borderRadius: '5px' }} />
+        </div>
+
         <DataGrid getStudentId={getStudentId} />
       </main>
     </div>
