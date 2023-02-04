@@ -76,7 +76,7 @@ const Dashboard = ({ getStudentId }) => {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <Typography paragraph>Add Student</Typography>
+        <Typography paragraph>Manage Student</Typography>
         <DataGrid getStudentId={getStudentId} />
       </main>
     </div>

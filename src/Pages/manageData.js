@@ -38,6 +38,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
   const [division, setDivision] = useState('');
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
+  const [RollNo, setRollNo] = useState('');
   const [landmark, setLandmark] = useState('');
   const [city, setCity] = useState('');
   const [pincode, setPincode] = useState('');
@@ -56,6 +57,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
       setDivision(docSnap.data().division);
       setAddress1(docSnap.data().address1);
       setAddress2(docSnap.data().address2);
+      setRollNo(docSnap.data().RollNo);
       setLandmark(docSnap.data().landmark);
       setCity(docSnap.data().city);
       setPincode(docSnap.data().pincode);
@@ -80,6 +82,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
         division,
         address1,
         address2,
+        RollNo,
         landmark,
         city,
         pincode,
@@ -204,6 +207,15 @@ const UpdateStudent = ({ id, setStudentId }) => {
             onChange={(e) => setAddress2(e.target.value)}
           />
         </div>
+        <TextField
+          id="outlined-text-input"
+          label="Roll No"
+          type="text"
+          autoComplete="current-text"
+          variant="outlined"
+          value={RollNo}
+          onChange={(e) => setRollNo(e.target.value)}
+        />
         <TextField
           id="outlined-text-input"
           label="Landmark"

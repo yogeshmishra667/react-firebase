@@ -37,6 +37,7 @@ const Addstudent = () => {
   const [division, setDivision] = useState('');
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
+  const [RollNo, setRollNo] = useState('');
   const [landmark, setLandmark] = useState('');
   const [city, setCity] = useState('');
   const [pincode, setPincode] = useState('');
@@ -64,6 +65,7 @@ const Addstudent = () => {
         division,
         address1,
         address2,
+        RollNo,
         landmark,
         city,
         pincode,
@@ -172,6 +174,14 @@ const Addstudent = () => {
             onChange={(e) => setAddress2(e.target.value)}
           />
         </div>
+        <TextField
+          id="outlined-text-input"
+          label="Roll No"
+          type="text"
+          autoComplete="current-text"
+          variant="outlined"
+          onChange={(e) => setRollNo(e.target.value)}
+        />
         <TextField
           id="outlined-text-input"
           label="Landmark"
