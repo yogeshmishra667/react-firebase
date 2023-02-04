@@ -56,7 +56,6 @@ const DataGrid = ({ getStudentId }) => {
           <TableCell align="right">Name</TableCell>
           <TableCell align="right">Class</TableCell>
           <TableCell align="right">Roll Nn</TableCell>
-          <TableCell align="right">city</TableCell>
 
           <TableCell align="right">View / Edit / Delete</TableCell>
         </TableRow>
@@ -68,9 +67,8 @@ const DataGrid = ({ getStudentId }) => {
             <TableCell align="right">
               {row.firstname} {row.lastname}
             </TableCell>
-            <TableCell align="right">{row.division}</TableCell>
             <TableCell align="right">{row.classs}</TableCell>
-            <TableCell align="right">{row.city}</TableCell>
+            <TableCell align="right">{row.RollNo}</TableCell>
             <TableCell align="right">
               <Link to="/view">
                 <IconButton aria-label="view" onClick={(e) => getStudentId(row.id)}>
@@ -97,7 +95,7 @@ const DataGrid = ({ getStudentId }) => {
                     if (result.isConfirmed) {
                       deleteDoc(doc(DB, 'student', row.id)).then(() => {
                         Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-                        navigate('/dashboard');
+                        navigate('/');
                       });
                     } else if (
                       /* Read more about handling dismissals below */

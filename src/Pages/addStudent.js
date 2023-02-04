@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { DB } from '../firebase';
 import { collection, addDoc, getDoc, doc, updateDoc } from 'firebase/firestore';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
+//material ui import section
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -41,6 +46,7 @@ const Addstudent = () => {
   const [landmark, setLandmark] = useState('');
   const [city, setCity] = useState('');
   const [pincode, setPincode] = useState('');
+  const navigate = useNavigate();
 
   //for the style
   const classes = useStyles();
@@ -70,147 +76,161 @@ const Addstudent = () => {
         city,
         pincode,
       });
-      console.log('Document written with ID: ', docRef.id);
+      toast.success('Student Added Successfully');
+      setTimeout(() => {
+        navigate('/');
+      }, 4000);
     } catch (e) {
-      console.error('Error adding document: ', e);
+      toast.error('Error adding document: ', e);
     }
   };
 
   return (
-    <form className={classes.root} validate onSubmit={handleSubmit}>
-      <div>
-        <TextField
-          id="outlined-text-input"
-          label="First Name"
-          type="text"
-          onChange={(e) => setFirstName(e.target.value)}
-          autoComplete="current-text"
-          variant="outlined"
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Middle Name"
-          type="text"
-          onChange={(e) => setMiddleName(e.target.value)}
-          autoComplete="current-text"
-          variant="outlined"
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Last name"
-          type="text"
-          onChange={(e) => setLastName(e.target.value)}
-          autoComplete="current-text"
-          variant="outlined"
-        />
-
-        {/* select dropdown */}
-        <div style={{ marginLeft: 40 }}>
-          <FormControl variant="filled" className={classes.formControl}>
-            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
-              select class
-            </InputLabel>
-            <Select
-              style={{
-                width: 400,
-              }}
-              onChange={(e) => setClasss(e.target.value)}
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-              // value={age}
-              // onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>select class</em>
-              </MenuItem>
-              {ClassData.map((cls) => (
-                <MenuItem key={cls} value={cls}>
-                  {cls}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl variant="filled" className={classes.formControl}>
-            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
-              select division
-            </InputLabel>
-            <Select
-              value={division}
-              onChange={(e) => setDivision(e.target.value)}
-              style={{
-                width: 400,
-              }}
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-            >
-              <MenuItem value="">
-                <em>select class</em>
-              </MenuItem>
-              {divisionData.map((div) => (
-                <MenuItem key={div} value={div}>
-                  {div}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div className={classes.margin}>
+    <>
+      <ToastContainer />
+      <form className={classes.root} validate onSubmit={handleSubmit}>
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ marginLeft: '20px', marginTop: '20px' }}
+          onClick={() => navigate('/')}
+        >
+          back
+        </Button>
+        <div>
           <TextField
-            id="outlined-multiline-flexible"
-            label="Address Line 1"
-            multiline
-            maxRows={4}
+            id="outlined-text-input"
+            label="First Name"
+            type="text"
+            onChange={(e) => setFirstName(e.target.value)}
+            autoComplete="current-text"
             variant="outlined"
-            onChange={(e) => setAddress1(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Middle Name"
+            type="text"
+            onChange={(e) => setMiddleName(e.target.value)}
+            autoComplete="current-text"
+            variant="outlined"
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Last name"
+            type="text"
+            onChange={(e) => setLastName(e.target.value)}
+            autoComplete="current-text"
+            variant="outlined"
           />
 
+          {/* select dropdown */}
+          <div style={{ marginLeft: 40 }}>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+                select class
+              </InputLabel>
+              <Select
+                style={{
+                  width: 400,
+                }}
+                onChange={(e) => setClasss(e.target.value)}
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                // value={age}
+                // onChange={handleChange}
+              >
+                <MenuItem value="">
+                  <em>select class</em>
+                </MenuItem>
+                {ClassData.map((cls) => (
+                  <MenuItem key={cls} value={cls}>
+                    {cls}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+                select division
+              </InputLabel>
+              <Select
+                value={division}
+                onChange={(e) => setDivision(e.target.value)}
+                style={{
+                  width: 400,
+                }}
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+              >
+                <MenuItem value="">
+                  <em>select class</em>
+                </MenuItem>
+                {divisionData.map((div) => (
+                  <MenuItem key={div} value={div}>
+                    {div}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className={classes.margin}>
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Address Line 1"
+              multiline
+              maxRows={4}
+              variant="outlined"
+              onChange={(e) => setAddress1(e.target.value)}
+            />
+
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Address Line 2"
+              multiline
+              maxRows={4}
+              variant="outlined"
+              onChange={(e) => setAddress2(e.target.value)}
+            />
+          </div>
           <TextField
-            id="outlined-multiline-flexible"
-            label="Address Line 2"
-            multiline
-            maxRows={4}
+            id="outlined-text-input"
+            label="Roll No"
+            type="text"
+            autoComplete="current-text"
             variant="outlined"
-            onChange={(e) => setAddress2(e.target.value)}
+            onChange={(e) => setRollNo(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Landmark"
+            type="text"
+            autoComplete="current-text"
+            variant="outlined"
+            onChange={(e) => setLandmark(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="city"
+            type="text"
+            autoComplete="current-text"
+            variant="outlined"
+            onChange={(e) => setCity(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Pincode"
+            type="text"
+            autoComplete="current-text"
+            variant="outlined"
+            onChange={(e) => setPincode(e.target.value)}
           />
         </div>
-        <TextField
-          id="outlined-text-input"
-          label="Roll No"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          onChange={(e) => setRollNo(e.target.value)}
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Landmark"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          onChange={(e) => setLandmark(e.target.value)}
-        />
-        <TextField
-          id="outlined-text-input"
-          label="city"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          onChange={(e) => setCity(e.target.value)}
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Pincode"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          onChange={(e) => setPincode(e.target.value)}
-        />
-      </div>
-      <Button variant="contained" color="primary" onClick={addData}>
-        Add Student
-      </Button>
-    </form>
+        <Button variant="contained" color="Secondary" onClick={addData} style={{ marginLeft: '20px' }}>
+          Add Student
+        </Button>
+      </form>
+    </>
   );
 };
 

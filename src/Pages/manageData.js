@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { DB } from '../firebase';
 import { collection, addDoc, getDoc, doc, updateDoc } from 'firebase/firestore';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+//material ui import section
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,6 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import { useNavigate } from 'react-router-dom';
+import { Chip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +47,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
   const [landmark, setLandmark] = useState('');
   const [city, setCity] = useState('');
   const [pincode, setPincode] = useState('');
+  const navigate = useNavigate();
 
   //edit Data
   const editHandler = async () => {
@@ -62,8 +68,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
       setCity(docSnap.data().city);
       setPincode(docSnap.data().pincode);
     } catch (err) {
-      console.log('Error getting document:', err);
-      // setMessage({ error: true, msg: err.message });
+      toast.error(err.message);
     }
   };
 
@@ -87,9 +92,13 @@ const UpdateStudent = ({ id, setStudentId }) => {
         city,
         pincode,
       });
-      console.log('Document updated successfully!');
+      toast.success('Student Updated Successfully');
+
+      setTimeout(() => {
+        navigate('/');
+      }, 4000);
     } catch (err) {
-      console.log('Error getting document:', err);
+      toast.error(err.message);
     }
   };
 
@@ -105,149 +114,157 @@ const UpdateStudent = ({ id, setStudentId }) => {
   };
 
   return (
-    <form className={classes.root} validate onSubmit={handleSubmit}>
-      <p>Current user Id - {id}</p>
-      <div>
-        <TextField
-          id="outlined-text-input"
-          label="First Name"
-          type="text"
-          value={firstname}
-          onChange={(e) => setFirstName(e.target.value)}
-          autoComplete="current-text"
-          variant="outlined"
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Middle Name"
-          type="text"
-          value={middlename}
-          onChange={(e) => setMiddleName(e.target.value)}
-          autoComplete="current-text"
-          variant="outlined"
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Last name"
-          type="text"
-          value={lastname}
-          onChange={(e) => setLastName(e.target.value)}
-          autoComplete="current-text"
-          variant="outlined"
-        />
-
-        {/* select dropdown */}
-        <div style={{ marginLeft: 40 }}>
-          <FormControl variant="filled" className={classes.formControl}>
-            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
-              select class
-            </InputLabel>
-            <Select
-              style={{
-                width: 400,
-              }}
-              value={classs}
-              onChange={(e) => setClasss(e.target.value)}
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-            >
-              <MenuItem value="">
-                <em>select class</em>
-              </MenuItem>
-              {ClassData.map((cls) => (
-                <MenuItem key={cls} value={cls}>
-                  {cls}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl variant="filled" className={classes.formControl}>
-            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
-              select division
-            </InputLabel>
-            <Select
-              value={division}
-              onChange={(e) => setDivision(e.target.value)}
-              style={{
-                width: 400,
-              }}
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-            >
-              <MenuItem value="">
-                <em>select class</em>
-              </MenuItem>
-              {divisionData.map((div) => (
-                <MenuItem key={div} value={div}>
-                  {div}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div className={classes.margin}>
+    <>
+      <ToastContainer />
+      <form className={classes.root} validate onSubmit={handleSubmit}>
+        <p style={{ marginLeft: '20px' }}>
+          <Chip label={`Current user id - ${id}`} variant="outlined" color="secondary" />
+        </p>
+        <Button variant="contained" color="secondary" style={{ marginLeft: '20px' }} onClick={() => navigate('/')}>
+          back
+        </Button>
+        <div>
           <TextField
-            id="outlined-multiline-flexible"
-            label="Address Line 1"
-            multiline
-            maxRows={4}
+            id="outlined-text-input"
+            label="First Name"
+            type="text"
+            value={firstname}
+            onChange={(e) => setFirstName(e.target.value)}
+            autoComplete="current-text"
             variant="outlined"
-            value={address1}
-            onChange={(e) => setAddress1(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Middle Name"
+            type="text"
+            value={middlename}
+            onChange={(e) => setMiddleName(e.target.value)}
+            autoComplete="current-text"
+            variant="outlined"
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Last name"
+            type="text"
+            value={lastname}
+            onChange={(e) => setLastName(e.target.value)}
+            autoComplete="current-text"
+            variant="outlined"
           />
 
+          {/* select dropdown */}
+          <div style={{ marginLeft: 40 }}>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+                select class
+              </InputLabel>
+              <Select
+                style={{
+                  width: 400,
+                }}
+                value={classs}
+                onChange={(e) => setClasss(e.target.value)}
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+              >
+                <MenuItem value="">
+                  <em>select class</em>
+                </MenuItem>
+                {ClassData.map((cls) => (
+                  <MenuItem key={cls} value={cls}>
+                    {cls}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+                select division
+              </InputLabel>
+              <Select
+                value={division}
+                onChange={(e) => setDivision(e.target.value)}
+                style={{
+                  width: 400,
+                }}
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+              >
+                <MenuItem value="">
+                  <em>select class</em>
+                </MenuItem>
+                {divisionData.map((div) => (
+                  <MenuItem key={div} value={div}>
+                    {div}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className={classes.margin}>
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Address Line 1"
+              multiline
+              maxRows={4}
+              variant="outlined"
+              value={address1}
+              onChange={(e) => setAddress1(e.target.value)}
+            />
+
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Address Line 2"
+              multiline
+              maxRows={4}
+              variant="outlined"
+              value={address2}
+              onChange={(e) => setAddress2(e.target.value)}
+            />
+          </div>
           <TextField
-            id="outlined-multiline-flexible"
-            label="Address Line 2"
-            multiline
-            maxRows={4}
+            id="outlined-text-input"
+            label="Roll No"
+            type="text"
+            autoComplete="current-text"
             variant="outlined"
-            value={address2}
-            onChange={(e) => setAddress2(e.target.value)}
+            value={RollNo}
+            onChange={(e) => setRollNo(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Landmark"
+            type="text"
+            autoComplete="current-text"
+            variant="outlined"
+            value={landmark}
+            onChange={(e) => setLandmark(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="city"
+            type="text"
+            autoComplete="current-text"
+            variant="outlined"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
+          <TextField
+            id="outlined-text-input"
+            label="Pincode"
+            type="text"
+            autoComplete="current-text"
+            variant="outlined"
+            value={pincode}
+            onChange={(e) => setPincode(e.target.value)}
           />
         </div>
-        <TextField
-          id="outlined-text-input"
-          label="Roll No"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          value={RollNo}
-          onChange={(e) => setRollNo(e.target.value)}
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Landmark"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          value={landmark}
-          onChange={(e) => setLandmark(e.target.value)}
-        />
-        <TextField
-          id="outlined-text-input"
-          label="city"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-        <TextField
-          id="outlined-text-input"
-          label="Pincode"
-          type="text"
-          autoComplete="current-text"
-          variant="outlined"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value)}
-        />
-      </div>
-      <Button variant="contained" color="primary" onClick={updateHandler}>
-        Update Student
-      </Button>
-    </form>
+        <Button variant="contained" color="Secondary" onClick={updateHandler} style={{ marginLeft: '20px' }}>
+          Update Student
+        </Button>
+      </form>
+    </>
   );
 };
 

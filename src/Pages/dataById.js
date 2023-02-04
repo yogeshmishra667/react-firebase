@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { DB } from '../firebase';
 import { collection, addDoc, getDoc, doc, updateDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
+//material ui import section
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import { Chip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DataById = ({ id }) => {
+  const navigate = useNavigate();
   const [firstname, setFirstName] = useState('');
   const [middlename, setMiddleName] = useState('');
   const [lastname, setLastName] = useState('');
@@ -84,7 +88,12 @@ const DataById = ({ id }) => {
 
   return (
     <form className={classes.root} validate onSubmit={handleSubmit}>
-      <p>Current user Id - {id}</p>
+      <p style={{ marginLeft: '20px' }}>
+        <Chip label={`Current user id - ${id}`} variant="outlined" color="secondary" />
+      </p>
+      <Button variant="contained" color="secondary" style={{ marginLeft: '20px' }} onClick={() => navigate('/')}>
+        back
+      </Button>
       <div>
         <TextField
           disabled
