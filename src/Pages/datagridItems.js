@@ -95,6 +95,7 @@ const DataGrid = ({ getStudentId }) => {
                     if (result.isConfirmed) {
                       deleteDoc(doc(DB, 'student', row.id)).then(() => {
                         Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                        window.location.reload();
                         navigate('/');
                       });
                     } else if (

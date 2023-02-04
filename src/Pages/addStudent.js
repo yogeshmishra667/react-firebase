@@ -4,6 +4,7 @@ import { collection, addDoc, getDoc, doc, updateDoc } from 'firebase/firestore';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 //material ui import section
 import TextField from '@material-ui/core/TextField';
@@ -90,7 +91,7 @@ const Addstudent = () => {
   return (
     <>
       <ToastContainer />
-      <form className={classes.root} validate onSubmit={handleSubmit}>
+      <form className={classes.root} onSubmit={handleSubmit}>
         <Button
           variant="contained"
           color="secondary"
@@ -106,6 +107,7 @@ const Addstudent = () => {
         </div>
         <div>
           <TextField
+            require
             id="outlined-text-input"
             label="First Name"
             type="text"
@@ -114,6 +116,7 @@ const Addstudent = () => {
             variant="outlined"
           />
           <TextField
+            required
             id="outlined-text-input"
             label="Middle Name"
             type="text"
@@ -122,6 +125,7 @@ const Addstudent = () => {
             variant="outlined"
           />
           <TextField
+            required
             id="outlined-text-input"
             label="Last name"
             type="text"
@@ -192,6 +196,7 @@ const Addstudent = () => {
             />
 
             <TextField
+              required
               id="outlined-multiline-flexible"
               label="Address Line 2"
               multiline
@@ -201,6 +206,7 @@ const Addstudent = () => {
             />
           </div>
           <TextField
+            required
             id="outlined-text-input"
             label="Roll No"
             type="text"
@@ -209,6 +215,7 @@ const Addstudent = () => {
             onChange={(e) => setRollNo(e.target.value)}
           />
           <TextField
+            required
             id="outlined-text-input"
             label="Landmark"
             type="text"
@@ -217,6 +224,7 @@ const Addstudent = () => {
             onChange={(e) => setLandmark(e.target.value)}
           />
           <TextField
+            required
             id="outlined-text-input"
             label="city"
             type="text"
@@ -225,6 +233,7 @@ const Addstudent = () => {
             onChange={(e) => setCity(e.target.value)}
           />
           <TextField
+            required
             id="outlined-text-input"
             label="Pincode"
             type="text"

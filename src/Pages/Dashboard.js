@@ -60,7 +60,12 @@ const Dashboard = ({ getStudentId }) => {
             Resolute AI
           </Typography>
 
-          <Chip label={auth.currentUser.email} variant="outlined" color="secondary" />
+          <Chip
+            label={auth.currentUser.email}
+            variant="outlined"
+            color="secondary"
+            style={{ borderRadius: '5px', padding: '20px 10px' }}
+          />
         </Toolbar>
       </AppBar>
       <Drawer
