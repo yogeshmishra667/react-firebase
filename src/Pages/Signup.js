@@ -4,8 +4,7 @@ import { auth } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import img from './logo.png';
+import img from '../images/logo.png';
 
 //martial ui
 import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core';
@@ -69,8 +68,8 @@ const Signup = () => {
         </Grid>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Username"
-            placeholder="Enter username"
+            label="Email"
+            placeholder="Enter Email"
             onChange={(e) => setEmail(e.target.value)}
             fullWidth
             required

@@ -7,10 +7,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
-import { mainListItems } from './listItems';
+import { mainListItems } from '../components/listItems';
 import DataGrid from '../Pages/datagridItems';
 import { auth } from '../firebase';
-import Clock from './Time';
+import Clock from '../components/Time';
 
 const drawerWidth = 240;
 

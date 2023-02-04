@@ -15,7 +15,7 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import { Grid, Paper, Avatar, Typography, Toolbar, Chip } from '@material-ui/core';
-import Clock from './Time';
+import Clock from '../components/Time';
 
 const useStyles = makeStyles((theme) => ({
   root: {

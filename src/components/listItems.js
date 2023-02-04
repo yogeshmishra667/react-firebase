@@ -9,8 +9,8 @@ import ListItem from '@material-ui/core/listItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 //for the Logout
 const logout = async () => {
@@ -38,14 +38,14 @@ export const mainListItems = (
       <Link to="/add">
         <ListItem button>
           <ListItemIcon>
-            <ShoppingCartIcon />
+            <PeopleIcon />
           </ListItemIcon>
           <ListItemText primary="Add Student" />
         </ListItem>
       </Link>
       <ListItem button onClick={logout}>
         <ListItemIcon>
-          <PeopleIcon />
+          <ExitToAppIcon />
         </ListItemIcon>
         <ListItemText primary="Logout" />
       </ListItem>
