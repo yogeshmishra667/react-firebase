@@ -72,9 +72,11 @@ const DataGrid = ({ getStudentId }) => {
             <TableCell align="right">{row.classs}</TableCell>
             <TableCell align="right">{row.city}</TableCell>
             <TableCell align="right">
-              <IconButton aria-label="view">
-                <ViewIcon />
-              </IconButton>
+              <Link to="/view">
+                <IconButton aria-label="view" onClick={(e) => getStudentId(row.id)}>
+                  <ViewIcon />
+                </IconButton>
+              </Link>
               <Link to="/edit">
                 <IconButton aria-label="edit" onClick={(e) => getStudentId(row.id)}>
                   <EditIcon />

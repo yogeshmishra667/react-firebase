@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UpdateStudent = ({ id, setStudentId }) => {
+const DataById = ({ id }) => {
   const [firstname, setFirstName] = useState('');
   const [middlename, setMiddleName] = useState('');
   const [lastname, setLastName] = useState('');
@@ -69,27 +69,6 @@ const UpdateStudent = ({ id, setStudentId }) => {
     editHandler();
   }, [id]);
 
-  const updateHandler = async () => {
-    try {
-      const update = doc(DB, 'student', id);
-      await updateDoc(update, {
-        firstname,
-        middlename,
-        lastname,
-        classs,
-        division,
-        address1,
-        address2,
-        landmark,
-        city,
-        pincode,
-      });
-      console.log('Document updated successfully!');
-    } catch (err) {
-      console.log('Error getting document:', err);
-    }
-  };
-
   //for the style
   const classes = useStyles();
 
@@ -106,6 +85,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
       <p>Current user Id - {id}</p>
       <div>
         <TextField
+          disabled
           id="outlined-text-input"
           label="First Name"
           type="text"
@@ -115,6 +95,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
           variant="outlined"
         />
         <TextField
+          disabled
           id="outlined-text-input"
           label="Middle Name"
           type="text"
@@ -124,6 +105,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
           variant="outlined"
         />
         <TextField
+          disabled
           id="outlined-text-input"
           label="Last name"
           type="text"
@@ -136,13 +118,14 @@ const UpdateStudent = ({ id, setStudentId }) => {
         {/* select dropdown */}
         <div style={{ marginLeft: 40 }}>
           <FormControl variant="filled" className={classes.formControl}>
-            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+            <InputLabel disabled className={classes.inputLbl} id="demo-simple-select-filled-label">
               select class
             </InputLabel>
             <Select
               style={{
                 width: 400,
               }}
+              disabled
               value={classs}
               onChange={(e) => setClasss(e.target.value)}
               labelId="demo-simple-select-filled-label"
@@ -160,10 +143,11 @@ const UpdateStudent = ({ id, setStudentId }) => {
           </FormControl>
 
           <FormControl variant="filled" className={classes.formControl}>
-            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+            <InputLabel disabled className={classes.inputLbl} id="demo-simple-select-filled-label">
               select division
             </InputLabel>
             <Select
+              disabled
               value={division}
               onChange={(e) => setDivision(e.target.value)}
               style={{
@@ -185,6 +169,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
         </div>
         <div className={classes.margin}>
           <TextField
+            disabled
             id="outlined-multiline-flexible"
             label="Address Line 1"
             multiline
@@ -195,6 +180,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
           />
 
           <TextField
+            disabled
             id="outlined-multiline-flexible"
             label="Address Line 2"
             multiline
@@ -205,6 +191,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
           />
         </div>
         <TextField
+          disabled
           id="outlined-text-input"
           label="Landmark"
           type="text"
@@ -214,6 +201,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
           onChange={(e) => setLandmark(e.target.value)}
         />
         <TextField
+          disabled
           id="outlined-text-input"
           label="city"
           type="text"
@@ -223,6 +211,7 @@ const UpdateStudent = ({ id, setStudentId }) => {
           onChange={(e) => setCity(e.target.value)}
         />
         <TextField
+          disabled
           id="outlined-text-input"
           label="Pincode"
           type="text"
@@ -232,11 +221,8 @@ const UpdateStudent = ({ id, setStudentId }) => {
           onChange={(e) => setPincode(e.target.value)}
         />
       </div>
-      <Button variant="contained" color="primary" onClick={updateHandler}>
-        Update Student
-      </Button>
     </form>
   );
 };
 
-export default UpdateStudent;
+export default DataById;

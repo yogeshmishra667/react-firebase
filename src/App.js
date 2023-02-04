@@ -8,6 +8,7 @@ import Signup from './Pages/Signup';
 import Dashboard from './Pages/Dashboard';
 import AddStudent from './Pages/addStudent';
 import UpdateStudent from './Pages/manageData';
+import DataById from './Pages/dataById';
 
 const App = () => {
   const [studentId, setStudentId] = useState('');
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/add" element={<AddStudent />} />
             <Route path="/edit" element={<UpdateStudent id={studentId} setStudentId={setStudentId} />} />
+            <Route path="view" element={<DataById id={studentId} />} />
             <Route path="/dashboard" element={<Dashboard getStudentId={getStudentIdHandler} />} />
           </Routes>
         </AuthProvider>

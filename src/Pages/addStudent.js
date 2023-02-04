@@ -41,31 +41,6 @@ const Addstudent = () => {
   const [city, setCity] = useState('');
   const [pincode, setPincode] = useState('');
 
-  // ----------------------for edit the data----------------------
-
-  // const editHandler = async () => {
-  //   // setMessage('');
-  //   try {
-  //     const docRef = doc(DB, 'student', id);
-  //     const docSnap = await getDoc(docRef);
-
-  //     setFirstName(docSnap.data().firstname);
-  //     setMiddleName(docSnap.data().middlename);
-  //     setLastName(docSnap.data().lastname);
-  //     setClasss(docSnap.data().classs);
-
-  //     const update = doc(DB, 'student', id);
-  //     await updateDoc(update, { firstname, middlename, lastname, classs });
-  //     console.log('Document updated successfully!');
-  //     setStudentId('');
-  //   } catch (err) {
-  //     console.log('Error getting document:', err);
-  //     // setMessage({ error: true, msg: err.message });
-  //   }
-  // };
-
-  // ----------------------end edit the data----------------------
-
   //for the style
   const classes = useStyles();
 
