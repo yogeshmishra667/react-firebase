@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DB } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDoc, doc, updateDoc } from 'firebase/firestore';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -39,8 +39,32 @@ const Addstudent = () => {
   const [address2, setAddress2] = useState('');
   const [landmark, setLandmark] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('');
   const [pincode, setPincode] = useState('');
+
+  // ----------------------for edit the data----------------------
+
+  // const editHandler = async () => {
+  //   // setMessage('');
+  //   try {
+  //     const docRef = doc(DB, 'student', id);
+  //     const docSnap = await getDoc(docRef);
+
+  //     setFirstName(docSnap.data().firstname);
+  //     setMiddleName(docSnap.data().middlename);
+  //     setLastName(docSnap.data().lastname);
+  //     setClasss(docSnap.data().classs);
+
+  //     const update = doc(DB, 'student', id);
+  //     await updateDoc(update, { firstname, middlename, lastname, classs });
+  //     console.log('Document updated successfully!');
+  //     setStudentId('');
+  //   } catch (err) {
+  //     console.log('Error getting document:', err);
+  //     // setMessage({ error: true, msg: err.message });
+  //   }
+  // };
+
+  // ----------------------end edit the data----------------------
 
   //for the style
   const classes = useStyles();

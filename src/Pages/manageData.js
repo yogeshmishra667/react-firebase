@@ -1,94 +1,338 @@
-import React, {useState, useEffect} from 'react';
-import { updateDoc, serverTimestamp } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
 import { DB } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, getDoc, doc, updateDoc } from 'firebase/firestore';
 
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(5),
+      width: '40ch',
+    },
 
-const EditStudent = () => {
-  const [student, setStudent] = useState({});
-  const [isEditing, setIsEditing] = useState(false);
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    inputLbl: {
+      margin: '100px',
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+const UpdateStudent = ({ id, setStudentId }) => {
+  const [firstname, setFirstName] = useState('');
+  const [middlename, setMiddleName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [classs, setClasss] = useState('');
+  const [division, setDivision] = useState('');
+  const [address1, setAddress1] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [landmark, setLandmark] = useState('');
+  const [city, setCity] = useState('');
+  const [pincode, setPincode] = useState('');
 
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
-
-  const handleSave = () => {
-    // Update the student document in Firestore
-    setIsEditing(false);
-  };
-
- useEffect(() => {
-  const updateData = async (id) => {
+  //edit Data
+  const editHandler = async () => {
+    // setMessage('');
     try {
       const docRef = doc(DB, 'student', id);
-const updateTimestamp = await updateDoc(docRef, {
-  timestamp: serverTimestamp(),
-});
+      const docSnap = await getDoc(docRef);
+
+      setFirstName(docSnap.data().firstname);
+      setMiddleName(docSnap.data().middlename);
+      setLastName(docSnap.data().lastname);
+      setClasss(docSnap.data().classs);
+      setDivision(docSnap.data().division);
+      setAddress1(docSnap.data().address1);
+      setAddress2(docSnap.data().address2);
+      setLandmark(docSnap.data().landmark);
+      setCity(docSnap.data().city);
+      setPincode(docSnap.data().pincode);
+    } catch (err) {
+      console.log('Error getting document:', err);
+      // setMessage({ error: true, msg: err.message });
     }
-    
-  }, []);
+  };
+
+  useEffect(() => {
+    editHandler();
+  }, [id]);
+
+  const updateHandler = async () => {
+    try {
+      const update = doc(DB, 'student', id);
+      await updateDoc(update, {
+        firstname,
+        middlename,
+        lastname,
+        classs,
+        division,
+        address1,
+        address2,
+        landmark,
+        city,
+        pincode,
+      });
+      console.log('Document updated successfully!');
+    } catch (err) {
+      console.log('Error getting document:', err);
+    }
+  };
+
+  //for the style
+  const classes = useStyles();
+
+  //for the class dropdown menu
+  const ClassData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const divisionData = ['A', 'B', 'C', 'D', 'E'];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
-    <div>
-      <h2>Student Information</h2>
-      <form>
-        <div>
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            type="text"
-            id="firstName"
-            value={student.firstName}
-            disabled={!isEditing}
-            onChange={(e) => setStudent({ ...student, firstName: e.target.value })}
+    <form className={classes.root} validate onSubmit={handleSubmit}>
+      <p>Current user Id - {id}</p>
+      <div>
+        <TextField
+          id="outlined-text-input"
+          label="First Name"
+          type="text"
+          value={firstname}
+          onChange={(e) => setFirstName(e.target.value)}
+          autoComplete="current-text"
+          variant="outlined"
+        />
+        <TextField
+          id="outlined-text-input"
+          label="Middle Name"
+          type="text"
+          value={middlename}
+          onChange={(e) => setMiddleName(e.target.value)}
+          autoComplete="current-text"
+          variant="outlined"
+        />
+        <TextField
+          id="outlined-text-input"
+          label="Last name"
+          type="text"
+          value={lastname}
+          onChange={(e) => setLastName(e.target.value)}
+          autoComplete="current-text"
+          variant="outlined"
+        />
+
+        {/* select dropdown */}
+        <div style={{ marginLeft: 40 }}>
+          <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+              select class
+            </InputLabel>
+            <Select
+              style={{
+                width: 400,
+              }}
+              value={classs}
+              onChange={(e) => setClasss(e.target.value)}
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+            >
+              <MenuItem value="">
+                <em>select class</em>
+              </MenuItem>
+              {ClassData.map((cls) => (
+                <MenuItem key={cls} value={cls}>
+                  {cls}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel className={classes.inputLbl} id="demo-simple-select-filled-label">
+              select division
+            </InputLabel>
+            <Select
+              value={division}
+              onChange={(e) => setDivision(e.target.value)}
+              style={{
+                width: 400,
+              }}
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+            >
+              <MenuItem value="">
+                <em>select class</em>
+              </MenuItem>
+              {divisionData.map((div) => (
+                <MenuItem key={div} value={div}>
+                  {div}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div className={classes.margin}>
+          <TextField
+            id="outlined-multiline-flexible"
+            label="Address Line 1"
+            multiline
+            maxRows={4}
+            variant="outlined"
+            value={address1}
+            onChange={(e) => setAddress1(e.target.value)}
+          />
+
+          <TextField
+            id="outlined-multiline-flexible"
+            label="Address Line 2"
+            multiline
+            maxRows={4}
+            variant="outlined"
+            value={address2}
+            onChange={(e) => setAddress2(e.target.value)}
           />
         </div>
-        <div>
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            type="text"
-            id="lastName"
-            value={student.lastName}
-            disabled={!isEditing}
-            onChange={(e) => setStudent({ ...student, lastName: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="age">Age:</label>
-          <input
-            type="number"
-            id="age"
-            value={student.age}
-            disabled={!isEditing}
-            onChange={(e) => setStudent({ ...student, age: e.target.value })}
-          />
-        </div>
-        {/* And so on, for each field in the student document */}
-      </form>
-      {!isEditing && (
-        <button type="button" onClick={handleEdit}>
-          Edit
-        </button>
-      )}
-      {isEditing && (
-        <>
-          <button type="button" onClick={handleSave}>
-            Save
-          </button>
-          <button type="button" onClick={handleCancel}>
-            Cancel
-          </button>
-        </>
-      )}
-    </div>
+        <TextField
+          id="outlined-text-input"
+          label="Landmark"
+          type="text"
+          autoComplete="current-text"
+          variant="outlined"
+          value={landmark}
+          onChange={(e) => setLandmark(e.target.value)}
+        />
+        <TextField
+          id="outlined-text-input"
+          label="city"
+          type="text"
+          autoComplete="current-text"
+          variant="outlined"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+        <TextField
+          id="outlined-text-input"
+          label="Pincode"
+          type="text"
+          autoComplete="current-text"
+          variant="outlined"
+          value={pincode}
+          onChange={(e) => setPincode(e.target.value)}
+        />
+      </div>
+      <Button variant="contained" color="primary" onClick={updateHandler}>
+        Update Student
+      </Button>
+    </form>
   );
 };
 
-export default EditStudent;
+export default UpdateStudent;
+
+// import React, { useState, useEffect } from 'react';
+// import { updateDoc, serverTimestamp } from 'firebase/firestore';
+// import { DB } from '../firebase';
+// import { doc, setDoc } from 'firebase/firestore';
+//import DataGrid from './datagridItems';
+
+// const EditStudent = () => {
+//   const [student, setStudent] = useState({});
+//   const [isEditing, setIsEditing] = useState(false);
+
+//   const handleEdit = () => {
+//     setIsEditing(true);
+//   };
+
+//   const handleCancel = () => {
+//     setIsEditing(false);
+//   };
+
+//   const handleSave = () => {
+//     // Update the student document in Firestore
+//     setIsEditing(false);
+//   };
+
+//   useEffect(() => {
+//     const updateData = async (id) => {
+//       try {
+//         const docRef = doc(DB, 'student', id);
+//         const updateTimestamp = await updateDoc(docRef, {
+//           timestamp: serverTimestamp(),
+//         });
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     };
+//   }, []);
+
+//   return (
+//     <div>
+//       <h2>Student Information</h2>
+//       <form>
+//         <div>
+//           <label htmlFor="firstName">First Name:</label>
+//           <input
+//             type="text"
+//             id="firstName"
+//             value={student.firstName}
+//             disabled={!isEditing}
+//             onChange={(e) => setStudent({ ...student, firstName: e.target.value })}
+//           />
+//         </div>
+//         <div>
+//           <label htmlFor="lastName">Last Name:</label>
+//           <input
+//             type="text"
+//             id="lastName"
+//             value={student.lastName}
+//             disabled={!isEditing}
+//             onChange={(e) => setStudent({ ...student, lastName: e.target.value })}
+//           />
+//         </div>
+//         <div>
+//           <label htmlFor="age">Age:</label>
+//           <input
+//             type="number"
+//             id="age"
+//             value={student.age}
+//             disabled={!isEditing}
+//             onChange={(e) => setStudent({ ...student, age: e.target.value })}
+//           />
+//         </div>
+//         {/* And so on, for each field in the student document */}
+//       </form>
+//       {!isEditing && (
+//         <button type="button" onClick={handleEdit}>
+//           Edit
+//         </button>
+//       )}
+//       {isEditing && (
+//         <>
+//           <button type="button" onClick={handleSave}>
+//             Save
+//           </button>
+//           <button type="button" onClick={handleCancel}>
+//             Cancel
+//           </button>
+//         </>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default EditStudent;
 
 //  <div>
 //       <h2>Student Information</h2>

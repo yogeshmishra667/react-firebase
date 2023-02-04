@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleTable() {
+const DataGrid = ({ getStudentId }) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -75,9 +75,11 @@ export default function SimpleTable() {
               <IconButton aria-label="view">
                 <ViewIcon />
               </IconButton>
-              <IconButton aria-label="edit">
-                <EditIcon />
-              </IconButton>
+              <Link to="/edit">
+                <IconButton aria-label="edit" onClick={(e) => getStudentId(row.id)}>
+                  <EditIcon />
+                </IconButton>
+              </Link>
               <IconButton
                 aria-label="delete"
                 onClick={() => {
@@ -112,4 +114,6 @@ export default function SimpleTable() {
       </TableBody>
     </Table>
   );
-}
+};
+
+export default DataGrid;

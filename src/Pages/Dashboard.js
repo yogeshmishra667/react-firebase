@@ -8,8 +8,8 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { mainListItems } from './listItems';
-import AddStudent from './addStudent';
-import DataGrid from '../components/datagridItems';
+import DataGrid from '../Pages/datagridItems';
+import { auth } from '../firebase';
 
 const drawerWidth = 240;
 
@@ -48,9 +48,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClippedDrawer() {
+const Dashboard = ({ getStudentId }) => {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -60,7 +59,7 @@ export default function ClippedDrawer() {
             Resolute AI
           </Typography>
 
-          <Chip label="yogeshmishra667@gmail.com" variant="outlined" color="secondary" />
+          <Chip label={auth.currentUser.email} variant="outlined" color="secondary" />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -78,8 +77,10 @@ export default function ClippedDrawer() {
       <main className={classes.content}>
         <Toolbar />
         <Typography paragraph>Add Student</Typography>
-        <DataGrid />
+        <DataGrid getStudentId={getStudentId} />
       </main>
     </div>
   );
-}
+};
+
+export default Dashboard;

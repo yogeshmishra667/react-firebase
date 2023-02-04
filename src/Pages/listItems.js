@@ -6,6 +6,18 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import { Link } from 'react-router-dom';
+import { auth } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+
+//for the Logout
+const logout = async () => {
+  try {
+    await auth.signOut();
+    return (window.location.href = '/login');
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const mainListItems = (
   <React.Fragment>
@@ -23,7 +35,7 @@ export const mainListItems = (
         <ListItemText primary="Add Student" />
       </ListItem>
     </Link>
-    <ListItem button>
+    <ListItem button onClick={logout}>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>

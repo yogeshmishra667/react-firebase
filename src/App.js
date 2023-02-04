@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './Auth/Auth';
 import PrivateRoute from './Auth/PrivateRoutes';
@@ -6,8 +7,15 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Dashboard from './Pages/Dashboard';
 import AddStudent from './Pages/addStudent';
+import UpdateStudent from './Pages/manageData';
 
 const App = () => {
+  const [studentId, setStudentId] = useState('');
+
+  const getStudentIdHandler = (id) => {
+    //console.log(id);
+    setStudentId(id);
+  };
   return (
     <div className="App">
       <Router>
@@ -26,7 +34,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/add" element={<AddStudent />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/edit" element={<UpdateStudent id={studentId} setStudentId={setStudentId} />} />
+            <Route path="/dashboard" element={<Dashboard getStudentId={getStudentIdHandler} />} />
           </Routes>
         </AuthProvider>
       </Router>
