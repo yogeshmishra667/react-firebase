@@ -64,6 +64,33 @@ const Addstudent = () => {
 
   //for the add data in firebase
   const addData = async () => {
+    if (
+      firstname === '' ||
+      middlename === '' ||
+      lastname === '' ||
+      classs === '' ||
+      division === '' ||
+      address1 === '' ||
+      address2 === '' ||
+      RollNo === '' ||
+      landmark === '' ||
+      city === '' ||
+      pincode === ''
+    ) {
+      toast.error('Please fill all the fields');
+      return;
+    }
+
+    if (pincode.length !== 6) {
+      toast.error('Please enter valid pincode');
+      return;
+    }
+
+    if (RollNo.length !== 2) {
+      toast.error('Please enter valid RollNo');
+      return;
+    }
+
     try {
       // Add a new document with a generated id.
       const docRef = await addDoc(collection(DB, 'student'), {

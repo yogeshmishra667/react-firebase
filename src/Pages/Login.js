@@ -25,6 +25,21 @@ const Login = () => {
   };
 
   const login = async () => {
+    if (email === '' || password === '') {
+      toast.error('Please fill all the fields');
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error('Email address is invalid');
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error('Password needs to be 6 characters or more');
+      return;
+    }
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;

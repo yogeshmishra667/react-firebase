@@ -26,6 +26,21 @@ const Signup = () => {
   };
 
   const register = async () => {
+    if (email === '' || password === '' || confirmPassword === '') {
+      toast.error('Please fill all the fields');
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error('Email address is invalid');
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error('Password needs to be 6 characters or more');
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
       return;
